@@ -240,7 +240,7 @@ MainWindow::~MainWindow()
 
 void MainWindow::readFilesName()
 {
-    QString selectedPath = QFileDialog::getExistingDirectory(this, tr("选择目录"), QDir::homePath());
+    QString selectedPath = QFileDialog::getExistingDirectory(this, tr("选择目录"), "E:\\code\\qt_learn\\24_file_rename\\test");
     if (!selectedPath.isEmpty())
     {
         // 如果选择了一个目录，则递归获取该目录下的所有文件

@@ -2,8 +2,8 @@
 #define MAINWINDOW_H
 
 #include <QMainWindow>
+
 #include "CameraCore.h"
-#include <CommunicationCore.h>
 #include "CameraDefault/CameraDefault.h"
 #include <QJsonDocument>
 #include <QJsonObject>
@@ -15,8 +15,20 @@
 #include <iostream>
 #include <functional>
 #include <cstring>
+
+
+
+#include <CommunicationCore.h>
 #include <CommunicationDefault/CommunicationDefault.h>
+#include <QJsonDocument>
+#include <QJsonObject>
+#include <QByteArray>
+#include <QJsonArray>
+#include <QString>
+#include <QDebug>
+#include <QVector>
 #include <vector>
+#include <iostream>
 
 class Camera
 {
@@ -116,24 +128,51 @@ public:
     }
 };
 
+
+
 class SerialPort
 {
 public:
     Gauss_CommunicationCore *commCore;
     ComHandle handle;
-    std::function<void(const ComHandle handle, const char* data, unsigned int length)> recvCall =
-        std::bind(&SerialPort::recv, this, std::placeholders::_1, std::placeholders::_2, std::placeholders::_3);
+    std::string portName;
+public:
+    SerialPort(std::string name)
+        : portName(name)
+    {}
+public:
+    // 回调
+    void recv(const ComHandle handle, const char* data, unsigned int length)
+    {
+        std::string msg(data, length);
+        std::cout << "recv: " << msg << std::endl;
+    }
+
+    void conn(const ComHandle handle, const char* info, unsigned int len, const bool isConnect)
+    {
+        qDebug() << "conn";
+        std::string msg(info, len);
+        std::cout << "info: " << msg << ", isConnect: " << isConnect << std::endl;
+    }
+
 
 public:
+    void debug(int handle)
+    {
+        unsigned int errnu = commCore->Gauss_CommunicationCore_GetLastError(handle);
+        qDebug() << "SetRecvCall error: " << QString("%1").arg(errnu, 8, 16);
+    }
+
     void start()
     {
+        qDebug() << "start()";
         commCore = new Gauss_CommunicationCore();
         // 构造串口信息Json
         QJsonObject serialPortJson;
         serialPortJson["DeviceType"] = 5;
         serialPortJson["Protocol"]   = 0;
         serialPortJson["LuaFilePath"] = "";
-        serialPortJson["PortName"] = "COM1";
+        serialPortJson["PortName"] = portName.c_str();
         serialPortJson["BaudRate"] = 9600;
         serialPortJson["DataBit"] = 8;
         serialPortJson["StopBit"] = 1;
@@ -143,63 +182,56 @@ public:
         std::string serialPortInfo = doc.toJson(QJsonDocument::Compact).toStdString();
 
         // 创建设备
-        ComHandle handle = commCore->Gauss_CommunicationCore_CreateDevice(serialPortInfo);
-        qDebug() << "handle: " << handle;
+        handle = commCore->Gauss_CommunicationCore_CreateDevice(serialPortInfo);
+        qDebug() << "created, handle: " << handle;
+
+        // 设置回调函数
+        int res = 0;
+        res = commCore->Gauss_CommunicationCore_SetConnectCallBack(handle, [=](const ComHandle handle, const char* info, unsigned int len, const bool isConnect) {
+            std::string msg(info, len);
+            std::cout << "info: " << msg << ", isConnect: " << isConnect << std::endl;
+        });
+        if (res != 0)
+        {
+            debug(handle);
+        }
+
+        res = commCore->Gauss_CommunicationCore_SetReadyReadCallBack(handle, [=](const ComHandle handle, const char* data, unsigned int length) {
+            std::string msg(data, length);
+            std::cout << portName << " recv: " << msg << std::endl;
+        });
+        if (res != 0)
+        {
+            debug(handle);
+        }
 
         // 打开设备
-        if (commCore->Gauss_CommunicationCore_OpenDevice(handle) < 0)
+        res = commCore->Gauss_CommunicationCore_OpenDevice(handle);
+        if (res != 0)
         {
-            unsigned int errnu = commCore->Gauss_CommunicationCore_GetLastError(handle);
-            qDebug() << "OpenDevice error: " << QString("%1").arg(errnu, 8, 16);
+            debug(handle);
         }
-        commCore->Gauss_CommunicationCore_SetReadyReadCallBack(handle, recvCall);
     }
 
-    void recv(const ComHandle handle, const char* data, unsigned int length)
-    {
-        std::string msg(data, length);
-        std::cout << "recv: " << msg << std::endl;
-    }
-    int res = 0;
     void send(const std::string &data)
     {
         QJsonObject obj;
-        obj["data"] = QString(data.c_str());
+        obj["data"] = data.c_str();
         QJsonDocument doc(obj);
-        std::string jsonData = doc.toJson().toStdString();
-        std::cout << jsonData;
-        // std::string jsonData = doc.toJson(QJsonDocument::Compact).toStdString();
+        std::string jsonData = doc.toJson(QJsonDocument::Compact).toStdString();
+        int res = 0;
         if ((res = commCore->Gauss_CommunicationCore_WriteAsyn(handle, jsonData)) < 0)
         {
-            unsigned int errnu = commCore->Gauss_CommunicationCore_GetLastError(handle);
-            qDebug() << "WriteAsyn error: " << QString("%1").arg(errnu, 8, 16) << ", " << res;
+            debug(handle);
         }
     }
-    void send(const std::vector<int> &array)
-    {
-        QJsonObject obj;
-        QJsonArray arr;
-        for (auto &e : array)
-        {
-            arr.push_back(e);
-        }
-        obj["array"] = arr;
-        QJsonDocument doc(obj);
-        // std::string jsonData = doc.toJson(QJsonDocument::Compact).toStdString();
-        std::string jsonData = doc.toJson().toStdString();
-        std::cout << jsonData;
-        if ((res = commCore->Gauss_CommunicationCore_WriteAsyn(handle, jsonData)) < 0)
-        {
-            unsigned int errnu = commCore->Gauss_CommunicationCore_GetLastError(handle);
-            qDebug() << "WriteAsyn error: " << QString("%1").arg(errnu, 8, 16) << ", " << res;
-        }
-    }
+
     void stop()
     {
+        qDebug() << "stop()";
         if (commCore->Gauss_CommunicationCore_CloseDevice(handle) < 0)
         {
-            unsigned int errnu = commCore->Gauss_CommunicationCore_GetLastError(handle);
-            qDebug() << "CloseDevice error: " << QString("%1").arg(errnu, 8, 16);
+            debug(handle);
         }
         if (commCore)
         {
@@ -215,7 +247,6 @@ class MainWindow;
 }
 QT_END_NAMESPACE
 
-
 class MainWindow : public QMainWindow
 {
     Q_OBJECT
@@ -226,8 +257,5 @@ public:
 
 private:
     Ui::MainWindow *ui;
-
-    Camera *camera;
-    SerialPort *serialPort;
 };
 #endif // MAINWINDOW_H
