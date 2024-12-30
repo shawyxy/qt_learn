@@ -6,58 +6,45 @@
    <rect>
     <x>0</x>
     <y>0</y>
-    <width>1301</width>
-    <height>860</height>
+    <width>1249</width>
+    <height>758</height>
    </rect>
   </property>
   <property name="windowTitle">
    <string>MainWindow</string>
   </property>
   <widget class="QWidget" name="centralwidget">
-   <widget class="QLabel" name="label_image">
-    <property name="geometry">
-     <rect>
-      <x>210</x>
-      <y>250</y>
-      <width>611</width>
-      <height>471</height>
-     </rect>
-    </property>
-    <property name="text">
-     <string/>
-    </property>
-   </widget>
    <widget class="QWidget" name="gridLayoutWidget">
     <property name="geometry">
      <rect>
-      <x>80</x>
-      <y>20</y>
-      <width>281</width>
-      <height>161</height>
+      <x>60</x>
+      <y>30</y>
+      <width>265</width>
+      <height>65</height>
      </rect>
     </property>
-    <layout class="QGridLayout" name="gridLayout">
+    <layout class="QGridLayout" name="gridLayout_camera">
+     <item row="0" column="1">
+      <widget class="QComboBox" name="comboBox_cameraList"/>
+     </item>
+     <item row="0" column="2">
+      <widget class="QPushButton" name="pushButton_cameraOpen">
+       <property name="text">
+        <string>Open</string>
+       </property>
+      </widget>
+     </item>
      <item row="0" column="0">
-      <widget class="QLabel" name="label">
+      <widget class="QLabel" name="label_camera">
        <property name="text">
         <string>相机列表</string>
        </property>
       </widget>
      </item>
-     <item row="0" column="1">
-      <widget class="QComboBox" name="comboBox"/>
-     </item>
      <item row="1" column="0">
-      <widget class="QPushButton" name="pushButton_2">
+      <widget class="QPushButton" name="pushButton_cameraTake">
        <property name="text">
         <string>拍照</string>
-       </property>
-      </widget>
-     </item>
-     <item row="0" column="2">
-      <widget class="QPushButton" name="pushButton">
-       <property name="text">
-        <string>Open</string>
        </property>
       </widget>
      </item>
@@ -66,150 +53,319 @@
    <widget class="QWidget" name="gridLayoutWidget_2">
     <property name="geometry">
      <rect>
-      <x>580</x>
-      <y>20</y>
-      <width>281</width>
-      <height>101</height>
+      <x>440</x>
+      <y>30</y>
+      <width>271</width>
+      <height>51</height>
      </rect>
     </property>
-    <layout class="QGridLayout" name="gridLayout_3">
-     <item row="0" column="0">
-      <widget class="QLabel" name="label_3">
-       <property name="text">
-        <string>串口列表</string>
-       </property>
-      </widget>
-     </item>
+    <layout class="QGridLayout" name="gridLayout_serial">
      <item row="0" column="1">
-      <widget class="QComboBox" name="comboBox_3"/>
+      <widget class="QComboBox" name="comboBox_serialList"/>
      </item>
      <item row="0" column="2">
-      <widget class="QPushButton" name="pushButton_6">
+      <widget class="QPushButton" name="pushButton_serialOpen">
        <property name="text">
         <string>Open</string>
        </property>
       </widget>
      </item>
+     <item row="0" column="0">
+      <widget class="QLabel" name="label_serial">
+       <property name="text">
+        <string>串口列表</string>
+       </property>
+      </widget>
+     </item>
+     <item row="1" column="0">
+      <widget class="QLabel" name="label_serial_status">
+       <property name="text">
+        <string>当前状态</string>
+       </property>
+      </widget>
+     </item>
+     <item row="1" column="1">
+      <widget class="QLabel" name="label_serial_deviceStatus">
+       <property name="text">
+        <string/>
+       </property>
+      </widget>
+     </item>
+     <item row="1" column="2">
+      <widget class="QPushButton" name="pushButton_unlock">
+       <property name="text">
+        <string>解锁</string>
+       </property>
+      </widget>
+     </item>
     </layout>
    </widget>
-   <widget class="QWidget" name="gridLayoutWidget_3">
+   <widget class="QGroupBox" name="groupBox_motorCoordinate">
     <property name="geometry">
      <rect>
-      <x>960</x>
-      <y>50</y>
-      <width>301</width>
+      <x>920</x>
+      <y>14</y>
+      <width>261</width>
+      <height>161</height>
+     </rect>
+    </property>
+    <property name="title">
+     <string>电机坐标</string>
+    </property>
+    <widget class="QWidget" name="gridLayoutWidget_4">
+     <property name="geometry">
+      <rect>
+       <x>20</x>
+       <y>40</y>
+       <width>151</width>
+       <height>101</height>
+      </rect>
+     </property>
+     <layout class="QGridLayout" name="gridLayout">
+      <item row="1" column="0">
+       <widget class="QLabel" name="label_yCod">
+        <property name="text">
+         <string>yPos:</string>
+        </property>
+       </widget>
+      </item>
+      <item row="2" column="0">
+       <widget class="QLabel" name="label_zCod">
+        <property name="text">
+         <string>zPos:</string>
+        </property>
+       </widget>
+      </item>
+      <item row="0" column="1">
+       <widget class="QLabel" name="label_xPos">
+        <property name="text">
+         <string/>
+        </property>
+       </widget>
+      </item>
+      <item row="1" column="1">
+       <widget class="QLabel" name="label_yPos">
+        <property name="text">
+         <string/>
+        </property>
+       </widget>
+      </item>
+      <item row="0" column="0">
+       <widget class="QLabel" name="label_xCod">
+        <property name="text">
+         <string>xPos:</string>
+        </property>
+       </widget>
+      </item>
+      <item row="2" column="1">
+       <widget class="QLabel" name="label_zPos">
+        <property name="text">
+         <string/>
+        </property>
+       </widget>
+      </item>
+     </layout>
+    </widget>
+   </widget>
+   <widget class="QLabel" name="label_image">
+    <property name="geometry">
+     <rect>
+      <x>60</x>
+      <y>170</y>
+      <width>711</width>
+      <height>451</height>
+     </rect>
+    </property>
+    <property name="text">
+     <string/>
+    </property>
+   </widget>
+   <widget class="QGroupBox" name="groupBox_motorControl">
+    <property name="geometry">
+     <rect>
+      <x>920</x>
+      <y>190</y>
+      <width>261</width>
       <height>171</height>
      </rect>
     </property>
-    <layout class="QGridLayout" name="gridLayout_4">
-     <item row="2" column="1">
-      <widget class="QLineEdit" name="lineEdit_2"/>
-     </item>
-     <item row="1" column="0">
-      <widget class="QLabel" name="label_6">
-       <property name="text">
-        <string>Y Pos:</string>
-       </property>
-      </widget>
-     </item>
-     <item row="1" column="1">
-      <widget class="QLineEdit" name="lineEdit_3"/>
-     </item>
-     <item row="0" column="0">
-      <widget class="QLabel" name="label_4">
-       <property name="text">
-        <string>X Pos:</string>
-       </property>
-      </widget>
-     </item>
-     <item row="0" column="1">
-      <widget class="QLineEdit" name="lineEdit"/>
-     </item>
-     <item row="2" column="0">
-      <widget class="QLabel" name="label_5">
-       <property name="text">
-        <string>Z Pos:</string>
-       </property>
-      </widget>
-     </item>
-    </layout>
+    <property name="title">
+     <string>电机控制</string>
+    </property>
+    <widget class="QWidget" name="gridLayoutWidget_3">
+     <property name="geometry">
+      <rect>
+       <x>20</x>
+       <y>30</y>
+       <width>181</width>
+       <height>134</height>
+      </rect>
+     </property>
+     <layout class="QGridLayout" name="gridLayout_3">
+      <item row="1" column="2">
+       <widget class="QPushButton" name="pushButton_zPlus">
+        <property name="maximumSize">
+         <size>
+          <width>50</width>
+          <height>30</height>
+         </size>
+        </property>
+        <property name="text">
+         <string>Z+</string>
+        </property>
+       </widget>
+      </item>
+      <item row="3" column="2">
+       <widget class="QPushButton" name="pushButton_zMinus">
+        <property name="maximumSize">
+         <size>
+          <width>50</width>
+          <height>30</height>
+         </size>
+        </property>
+        <property name="text">
+         <string>Z-</string>
+        </property>
+       </widget>
+      </item>
+      <item row="2" column="1">
+       <widget class="QPushButton" name="pushButton_yHome">
+        <property name="maximumSize">
+         <size>
+          <width>50</width>
+          <height>30</height>
+         </size>
+        </property>
+        <property name="text">
+         <string>YHome</string>
+        </property>
+       </widget>
+      </item>
+      <item row="1" column="1">
+       <widget class="QPushButton" name="pushButton_yPlus">
+        <property name="maximumSize">
+         <size>
+          <width>50</width>
+          <height>30</height>
+         </size>
+        </property>
+        <property name="text">
+         <string>Y+</string>
+        </property>
+       </widget>
+      </item>
+      <item row="3" column="1">
+       <widget class="QPushButton" name="pushButton_yMinus">
+        <property name="maximumSize">
+         <size>
+          <width>50</width>
+          <height>30</height>
+         </size>
+        </property>
+        <property name="text">
+         <string>Y-</string>
+        </property>
+       </widget>
+      </item>
+      <item row="3" column="0">
+       <widget class="QPushButton" name="pushButton_xMinus">
+        <property name="maximumSize">
+         <size>
+          <width>50</width>
+          <height>30</height>
+         </size>
+        </property>
+        <property name="text">
+         <string>X-</string>
+        </property>
+       </widget>
+      </item>
+      <item row="2" column="0">
+       <widget class="QPushButton" name="pushButton_xHome">
+        <property name="maximumSize">
+         <size>
+          <width>50</width>
+          <height>30</height>
+         </size>
+        </property>
+        <property name="text">
+         <string>XHome</string>
+        </property>
+       </widget>
+      </item>
+      <item row="1" column="0">
+       <widget class="QPushButton" name="pushButton_xPlus">
+        <property name="maximumSize">
+         <size>
+          <width>50</width>
+          <height>30</height>
+         </size>
+        </property>
+        <property name="text">
+         <string>X+</string>
+        </property>
+       </widget>
+      </item>
+      <item row="2" column="2">
+       <widget class="QPushButton" name="pushButton_zHome">
+        <property name="maximumSize">
+         <size>
+          <width>50</width>
+          <height>30</height>
+         </size>
+        </property>
+        <property name="text">
+         <string>ZHome</string>
+        </property>
+       </widget>
+      </item>
+      <item row="0" column="1">
+       <widget class="QLineEdit" name="lineEdit_yStep"/>
+      </item>
+      <item row="0" column="2">
+       <widget class="QLineEdit" name="lineEdit_zStep"/>
+      </item>
+      <item row="0" column="0">
+       <widget class="QLineEdit" name="lineEdit_xStep"/>
+      </item>
+     </layout>
+    </widget>
    </widget>
-   <widget class="QFrame" name="frame">
+   <widget class="QPushButton" name="pushButton_send">
     <property name="geometry">
      <rect>
-      <x>970</x>
-      <y>520</y>
-      <width>291</width>
-      <height>251</height>
+      <x>1090</x>
+      <y>400</y>
+      <width>92</width>
+      <height>28</height>
      </rect>
     </property>
-    <property name="frameShape">
-     <enum>QFrame::StyledPanel</enum>
-    </property>
-    <property name="frameShadow">
-     <enum>QFrame::Raised</enum>
+    <property name="text">
+     <string>Send</string>
     </property>
    </widget>
-   <widget class="QWidget" name="gridLayoutWidget_4">
+   <widget class="QPlainTextEdit" name="plainTextEdit_log">
     <property name="geometry">
      <rect>
-      <x>970</x>
-      <y>260</y>
-      <width>291</width>
-      <height>221</height>
+      <x>920</x>
+      <y>430</y>
+      <width>261</width>
+      <height>271</height>
      </rect>
     </property>
-    <layout class="QGridLayout" name="gridLayout_5">
-     <item row="1" column="2">
-      <widget class="QPushButton" name="pushButton_11">
-       <property name="text">
-        <string>Z+</string>
-       </property>
-      </widget>
-     </item>
-     <item row="2" column="1">
-      <widget class="QPushButton" name="pushButton_10">
-       <property name="text">
-        <string>Home</string>
-       </property>
-      </widget>
-     </item>
-     <item row="3" column="2">
-      <widget class="QPushButton" name="pushButton_8">
-       <property name="text">
-        <string>Z-</string>
-       </property>
-      </widget>
-     </item>
-     <item row="3" column="1">
-      <widget class="QPushButton" name="pushButton_9">
-       <property name="text">
-        <string>X-</string>
-       </property>
-      </widget>
-     </item>
-     <item row="1" column="1">
-      <widget class="QPushButton" name="pushButton_12">
-       <property name="text">
-        <string>X+</string>
-       </property>
-      </widget>
-     </item>
-     <item row="2" column="2">
-      <widget class="QPushButton" name="pushButton_13">
-       <property name="text">
-        <string>Y-</string>
-       </property>
-      </widget>
-     </item>
-     <item row="2" column="0">
-      <widget class="QPushButton" name="pushButton_7">
-       <property name="text">
-        <string>Y+</string>
-       </property>
-      </widget>
-     </item>
-    </layout>
+   </widget>
+   <widget class="QLineEdit" name="lineEdit_send">
+    <property name="geometry">
+     <rect>
+      <x>920</x>
+      <y>370</y>
+      <width>261</width>
+      <height>27</height>
+     </rect>
+    </property>
+    <property name="text">
+     <string/>
+    </property>
    </widget>
   </widget>
   <widget class="QMenuBar" name="menubar">
@@ -217,8 +373,8 @@
     <rect>
      <x>0</x>
      <y>0</y>
-     <width>1301</width>
-     <height>24</height>
+     <width>1249</width>
+     <height>18</height>
     </rect>
    </property>
   </widget>
