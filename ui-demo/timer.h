@@ -1,27 +1,28 @@
+#ifndef TIMER_H
+#define TIMER_H
 
-#ifndef THREADS_H
-#define THREADS_H
-
+#include <QDebug>
 #include <QObject>
 #include <QTimer>
-#include <QThread>
 
-class Timer : public QObject
-{
-    Q_OBJECT
+class Timer : public QObject {
+  Q_OBJECT
 public:
-    explicit Timer(QObject *parent = nullptr);
-    ~Timer();
-
-public slots:
-    void startWork();
-    void stopWork();
+  explicit Timer(QObject *parent = nullptr) : QObject(parent) {}
+  void timerStart() {
+    timer = new QTimer(this);
+    connect(timer, &QTimer::timeout, this, &Timer::onTimeout);
+    timer->start(1000);
+  }
 
 signals:
-    void workProgress();
+  void timeoutSignal();
+
+public slots:
+  void onTimeout() { emit timeoutSignal(); }
 
 private:
-    QTimer *timer;
+  QTimer *timer;
 };
 
-#endif // THREADS_H
+#endif // TIMER_H

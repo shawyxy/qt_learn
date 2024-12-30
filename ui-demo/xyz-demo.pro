@@ -12,8 +12,7 @@ SOURCES += \
     camera.cpp \
     main.cpp \
     mainwindow.cpp \
-    serialport.cpp \
-    timer.cpp
+    serialport.cpp
 
 HEADERS += \
     camera.h \
