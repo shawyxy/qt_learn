@@ -19,18 +19,15 @@
      <rect>
       <x>60</x>
       <y>30</y>
-      <width>265</width>
-      <height>65</height>
+      <width>308</width>
+      <height>90</height>
      </rect>
     </property>
     <layout class="QGridLayout" name="gridLayout_camera">
-     <item row="0" column="1">
-      <widget class="QComboBox" name="comboBox_cameraList"/>
-     </item>
-     <item row="0" column="2">
-      <widget class="QPushButton" name="pushButton_cameraOpen">
+     <item row="1" column="1">
+      <widget class="QPushButton" name="pushButton_templateMatch">
        <property name="text">
-        <string>Open</string>
+        <string>匹配</string>
        </property>
       </widget>
      </item>
@@ -41,10 +38,41 @@
        </property>
       </widget>
      </item>
+     <item row="0" column="2">
+      <widget class="QPushButton" name="pushButton_cameraOpen">
+       <property name="text">
+        <string>Open</string>
+       </property>
+      </widget>
+     </item>
+     <item row="0" column="1">
+      <widget class="QComboBox" name="comboBox_cameraList"/>
+     </item>
+     <item row="1" column="2">
+      <widget class="QPushButton" name="pushButton_moveCenter">
+       <property name="text">
+        <string>移动至中心</string>
+       </property>
+      </widget>
+     </item>
      <item row="1" column="0">
       <widget class="QPushButton" name="pushButton_cameraTake">
        <property name="text">
         <string>拍照</string>
+       </property>
+      </widget>
+     </item>
+     <item row="2" column="2">
+      <widget class="QPushButton" name="pushButton_moveCircle">
+       <property name="text">
+        <string>移动一周</string>
+       </property>
+      </widget>
+     </item>
+     <item row="2" column="1">
+      <widget class="QPushButton" name="pushButton_moveNextCenter">
+       <property name="text">
+        <string>离开当前物体</string>
        </property>
       </widget>
      </item>
@@ -197,76 +225,11 @@
       <rect>
        <x>20</x>
        <y>30</y>
-       <width>181</width>
+       <width>231</width>
        <height>134</height>
       </rect>
      </property>
      <layout class="QGridLayout" name="gridLayout_3">
-      <item row="1" column="2">
-       <widget class="QPushButton" name="pushButton_zPlus">
-        <property name="maximumSize">
-         <size>
-          <width>50</width>
-          <height>30</height>
-         </size>
-        </property>
-        <property name="text">
-         <string>Z+</string>
-        </property>
-       </widget>
-      </item>
-      <item row="3" column="2">
-       <widget class="QPushButton" name="pushButton_zMinus">
-        <property name="maximumSize">
-         <size>
-          <width>50</width>
-          <height>30</height>
-         </size>
-        </property>
-        <property name="text">
-         <string>Z-</string>
-        </property>
-       </widget>
-      </item>
-      <item row="2" column="1">
-       <widget class="QPushButton" name="pushButton_yHome">
-        <property name="maximumSize">
-         <size>
-          <width>50</width>
-          <height>30</height>
-         </size>
-        </property>
-        <property name="text">
-         <string>YHome</string>
-        </property>
-       </widget>
-      </item>
-      <item row="1" column="1">
-       <widget class="QPushButton" name="pushButton_yPlus">
-        <property name="maximumSize">
-         <size>
-          <width>50</width>
-          <height>30</height>
-         </size>
-        </property>
-        <property name="text">
-         <string>Y+</string>
-        </property>
-       </widget>
-      </item>
-      <item row="3" column="1">
-       <widget class="QPushButton" name="pushButton_yMinus">
-        <property name="maximumSize">
-         <size>
-          <width>50</width>
-          <height>30</height>
-         </size>
-        </property>
-        <property name="text">
-         <string>Y-</string>
-        </property>
-       </widget>
-      </item>
       <item row="3" column="0">
        <widget class="QPushButton" name="pushButton_xMinus">
         <property name="maximumSize">
@@ -293,6 +256,19 @@
         </property>
        </widget>
       </item>
+      <item row="3" column="2">
+       <widget class="QPushButton" name="pushButton_zMinus">
+        <property name="maximumSize">
+         <size>
+          <width>50</width>
+          <height>30</height>
+         </size>
+        </property>
+        <property name="text">
+         <string>Z-</string>
+        </property>
+       </widget>
+      </item>
       <item row="1" column="0">
        <widget class="QPushButton" name="pushButton_xPlus">
         <property name="maximumSize">
@@ -303,6 +279,38 @@
         </property>
         <property name="text">
          <string>X+</string>
+        </property>
+       </widget>
+      </item>
+      <item row="0" column="1">
+       <widget class="QLineEdit" name="lineEdit_yStep"/>
+      </item>
+      <item row="0" column="0">
+       <widget class="QLineEdit" name="lineEdit_xStep"/>
+      </item>
+      <item row="3" column="1">
+       <widget class="QPushButton" name="pushButton_yMinus">
+        <property name="maximumSize">
+         <size>
+          <width>50</width>
+          <height>30</height>
+         </size>
+        </property>
+        <property name="text">
+         <string>Y-</string>
+        </property>
+       </widget>
+      </item>
+      <item row="1" column="2">
+       <widget class="QPushButton" name="pushButton_zPlus">
+        <property name="maximumSize">
+         <size>
+          <width>50</width>
+          <height>30</height>
+         </size>
+        </property>
+        <property name="text">
+         <string>Z+</string>
         </property>
        </widget>
       </item>
@@ -319,14 +327,47 @@
         </property>
        </widget>
       </item>
-      <item row="0" column="1">
-       <widget class="QLineEdit" name="lineEdit_yStep"/>
+      <item row="1" column="1">
+       <widget class="QPushButton" name="pushButton_yPlus">
+        <property name="maximumSize">
+         <size>
+          <width>50</width>
+          <height>30</height>
+         </size>
+        </property>
+        <property name="text">
+         <string>Y+</string>
+        </property>
+       </widget>
       </item>
       <item row="0" column="2">
        <widget class="QLineEdit" name="lineEdit_zStep"/>
       </item>
-      <item row="0" column="0">
-       <widget class="QLineEdit" name="lineEdit_xStep"/>
+      <item row="2" column="1">
+       <widget class="QPushButton" name="pushButton_yHome">
+        <property name="maximumSize">
+         <size>
+          <width>50</width>
+          <height>30</height>
+         </size>
+        </property>
+        <property name="text">
+         <string>YHome</string>
+        </property>
+       </widget>
+      </item>
+      <item row="2" column="3">
+       <widget class="QPushButton" name="pushButton_cameraHome">
+        <property name="maximumSize">
+         <size>
+          <width>50</width>
+          <height>30</height>
+         </size>
+        </property>
+        <property name="text">
+         <string>CHome</string>
+        </property>
+       </widget>
       </item>
      </layout>
     </widget>
